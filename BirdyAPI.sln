@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirdyAPI", "BirdyAPI\BirdyAPI.csproj", "{043696F9-2CC8-4326-8394-2B73EFCC8567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdyModel", "BirdyModel\BirdyModel.csproj", "{1F2D31C4-D505-4405-B3B4-475CA2DC0887}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		PROD|Any CPU = PROD|Any CPU
+		Release|Any CPU = Release|Any CPU
+		TEST|Any CPU = TEST|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.PROD|Any CPU.ActiveCfg = PROD|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.PROD|Any CPU.Build.0 = PROD|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.TEST|Any CPU.ActiveCfg = TEST|Any CPU
+		{043696F9-2CC8-4326-8394-2B73EFCC8567}.TEST|Any CPU.Build.0 = TEST|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.PROD|Any CPU.ActiveCfg = PROD|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.PROD|Any CPU.Build.0 = PROD|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.TEST|Any CPU.ActiveCfg = TEST|Any CPU
+		{1F2D31C4-D505-4405-B3B4-475CA2DC0887}.TEST|Any CPU.Build.0 = TEST|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3107E14B-7A95-439D-872D-E87398C65C02}
+	EndGlobalSection
+EndGlobal
