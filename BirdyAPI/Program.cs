@@ -14,7 +14,11 @@ namespace BirdyAPI
     {
         public static void Main(string[] args)
         {
+            Common.InitVariablesForDebug();
+            Common.InitVariablesForTest();
+            Common.InitVariablesForProd();
             Connection.PrepareDatabase();
+
             CreateHostBuilder(args).Build().Run();
         }
 
