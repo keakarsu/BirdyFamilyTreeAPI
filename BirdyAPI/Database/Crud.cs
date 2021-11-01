@@ -59,7 +59,7 @@ namespace BirdyAPI.Database
 
             if (pConnection == null)
             {
-                using var conn = Connection.ConnectionWinvestate();
+                using var conn = Connection.ConnectionBirdy();
                 loResult = Insert(conn, entity, out pException);
             }
             else
@@ -67,63 +67,63 @@ namespace BirdyAPI.Database
                 loResult = Insert(pConnection.MyConnection, entity, out pException, pConnection.MyTransaction);
             }
 
-            if (loResult <= 0)
-            {
-                return loResult;
-            }
+            //if (loResult <= 0)
+            //{
+            //    return loResult;
+            //}
 
-            var loCheckAttribute = Attribute.GetCustomAttribute(entity.GetType(), typeof(IgnoreLoggingAttribute));
+            //var loCheckAttribute = Attribute.GetCustomAttribute(entity.GetType(), typeof(IgnoreLoggingAttribute));
 
-            if (loCheckAttribute != null)
-            {
-                return loResult;
-            }
+            //if (loCheckAttribute != null)
+            //{
+            //    return loResult;
+            //}
 
-            var loTableName = (TableAttribute)Attribute.GetCustomAttribute(entity.GetType(), typeof(TableAttribute));
+            //var loTableName = (TableAttribute)Attribute.GetCustomAttribute(entity.GetType(), typeof(TableAttribute));
 
-            //var loType = entity.GetType().BaseType == null ? entity.GetType().Name : entity.GetType().BaseType.Name;
-            var loProperties = entity.GetType().GetProperties();
-            var property = entity.GetType().GetProperty("id");
-            property.SetValue(entity, (int)loResult, null);
+            ////var loType = entity.GetType().BaseType == null ? entity.GetType().Name : entity.GetType().BaseType.Name;
+            //var loProperties = entity.GetType().GetProperties();
+            //var property = entity.GetType().GetProperty("id");
+            //property.SetValue(entity, (int)loResult, null);
 
-            var loUserId = loProperties.FirstOrDefault(x => x.Name == "row_create_user")?.GetValue(entity);
+            //var loUserId = loProperties.FirstOrDefault(x => x.Name == "row_create_user")?.GetValue(entity);
 
-            if (!Guid.TryParse(loUserId?.ToString(), out Guid loUser))
-            {
-                loUser = Guid.Empty;
-            }
+            //if (!Guid.TryParse(loUserId?.ToString(), out Guid loUser))
+            //{
+            //    loUser = Guid.Empty;
+            //}
 
-            var loPrimaryKeyField = loProperties.Where(x => Attribute.IsDefined(x, typeof(LoggingPrimaryKeyAttribute))).First()?.Name?.ToString();
-            var loPrimaryKeyValue = loProperties.Where(x => Attribute.IsDefined(x, typeof(LoggingPrimaryKeyAttribute))).First().GetValue(entity)?.ToString();
+            //var loPrimaryKeyField = loProperties.Where(x => Attribute.IsDefined(x, typeof(LoggingPrimaryKeyAttribute))).First()?.Name?.ToString();
+            //var loPrimaryKeyValue = loProperties.Where(x => Attribute.IsDefined(x, typeof(LoggingPrimaryKeyAttribute))).First().GetValue(entity)?.ToString();
 
-            var loChange = new ChangeLog
-            {
-                operation = "INSERT",
-                date_changed = DateTime.Now,
-                old_value = "-",
-                new_value = "Yeni Kayıt",
-                property_name = loTableName.Name,
-                class_name = loTableName.Name,
-                primary_key = loPrimaryKeyValue,
-                primary_key_field = loPrimaryKeyField,
-                changed_user = loUser
-            };
+            //var loChange = new ChangeLog
+            //{
+            //    operation = "INSERT",
+            //    date_changed = DateTime.Now,
+            //    old_value = "-",
+            //    new_value = "Yeni Kayıt",
+            //    property_name = loTableName.Name,
+            //    class_name = loTableName.Name,
+            //    primary_key = loPrimaryKeyValue,
+            //    primary_key_field = loPrimaryKeyField,
+            //    changed_user = loUser
+            //};
 
-            if (pConnection == null)
-            {
+            //if (pConnection == null)
+            //{
 
-                Task.Run(() => Crud<ChangeLog>.Insert(loChange, out _));
-            }
-            else
-            {
-                if (pConnection.Changes == null)
-                {
-                    pConnection.Changes = new List<ChangeLog>();
-                }
+            //    Task.Run(() => Crud<ChangeLog>.Insert(loChange, out _));
+            //}
+            //else
+            //{
+            //    if (pConnection.Changes == null)
+            //    {
+            //        pConnection.Changes = new List<ChangeLog>();
+            //    }
 
-                pConnection.Changes.Add(loChange);
-            }
-            //Task.Run(() => HelperMethods.TrackChangesOfObject(entity, oldEntity));
+            //    pConnection.Changes.Add(loChange);
+            //}
+            ////Task.Run(() => HelperMethods.TrackChangesOfObject(entity, oldEntity));
 
             return loResult;
         }
@@ -135,7 +135,7 @@ namespace BirdyAPI.Database
 
             if (pConnection == null)
             {
-                using var conn = Connection.ConnectionWinvestate();
+                using var conn = Connection.ConnectionBirdy();
                 loResult = Update(conn, entity, out pException);
             }
             else
@@ -143,37 +143,36 @@ namespace BirdyAPI.Database
                 loResult = Update(pConnection.MyConnection, entity, out pException, pConnection.MyTransaction);
             }
 
+            //if (!loResult)
+            //{
+            //    return loResult;
+            //}
 
-            if (!loResult)
-            {
-                return loResult;
-            }
+            //var loChanges = HelperMethods.TrackChangesOfObject(entity, oldEntity);
 
-            var loChanges = HelperMethods.TrackChangesOfObject(entity, oldEntity);
+            //if (loChanges.Any())
+            //{
+            //    if (pConnection == null)
+            //    {
+            //        Task.Run(() => Crud<ChangeLog>.Insert(loChanges, out _));
+            //    }
+            //    else
+            //    {
+            //        if (pConnection.Changes == null)
+            //        {
+            //            pConnection.Changes = new List<ChangeLog>();
+            //        }
 
-            if (loChanges.Any())
-            {
-                if (pConnection == null)
-                {
-                    Task.Run(() => Crud<ChangeLog>.Insert(loChanges, out _));
-                }
-                else
-                {
-                    if (pConnection.Changes == null)
-                    {
-                        pConnection.Changes = new List<ChangeLog>();
-                    }
-
-                    pConnection.Changes.AddRange(loChanges);
-                }
-            }
+            //        pConnection.Changes.AddRange(loChanges);
+            //    }
+            //}
 
             return loResult;
         }
 
         public static bool Delete(TEntity entity, MesnetDbConnection pConnection = null)
         {
-            using (var conn = Connection.ConnectionWinvestate())
+            using (var conn = Connection.ConnectionBirdy())
             {
                 try
                 {
@@ -190,7 +189,7 @@ namespace BirdyAPI.Database
 
         public static bool Delete(string pQuery)
         {
-            using (var conn = Connection.ConnectionWinvestate())
+            using (var conn = Connection.ConnectionBirdy())
             {
                 try
                 {
@@ -208,7 +207,7 @@ namespace BirdyAPI.Database
         public static dynamic Insert(List<TEntity> entityList, out string pException)
         {
             pException = "";
-            using (var conn = Connection.ConnectionWinvestate())
+            using (var conn = Connection.ConnectionBirdy())
             {
                 conn.Open();
                 using (var transaction = conn.BeginTransaction())
@@ -238,7 +237,7 @@ namespace BirdyAPI.Database
         public static dynamic Update(List<TEntity> entityList, out string pException)
         {
             pException = "";
-            using (var conn = Connection.ConnectionWinvestate())
+            using (var conn = Connection.ConnectionBirdy())
             {
                 conn.Open();
                 using (var transaction = conn.BeginTransaction())
@@ -268,7 +267,7 @@ namespace BirdyAPI.Database
         public static dynamic Delete(List<TEntity> entityList, out string pException)
         {
             pException = "";
-            using (var conn = Connection.ConnectionWinvestate())
+            using (var conn = Connection.ConnectionBirdy())
             {
                 conn.Open();
                 using (var transaction = conn.BeginTransaction())

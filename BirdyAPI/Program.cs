@@ -1,3 +1,4 @@
+using BirdyAPI.Controllers;
 using BirdyAPI.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,8 @@ namespace BirdyAPI
             Common.InitVariablesForProd();
             Connection.PrepareDatabase();
 
+            BirdController loController = new BirdController();
+            loController.GetFamilyTreeOfBird("377c4cbc-fc1f-4b8b-ab6e-06a0b796b486");
             CreateHostBuilder(args).Build().Run();
         }
 

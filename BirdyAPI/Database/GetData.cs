@@ -20,5 +20,29 @@ namespace BirdyAPI.Database
             var loUserId = loUsers.Count > 0 ? loUsers.First().id : 0;
             return !Connection.OpenConnection(connection) ? 0 : loUserId;
         }
+        public static List<BirdDto> GetAllBirdsByUserId(string pId)
+        {
+            var loQuery = Queries.GetAllBirdsByUserId;
+            loQuery = loQuery.Replace("@P01", pId);
+
+            using var connection = Connection.ConnectionBirdy();
+            if (!Connection.OpenConnection(connection)) return null;
+
+            var result = connection.Query<BirdDto>(loQuery).ToList();
+            return !result.Any() ? new List<BirdDto>() : result;
+        }
+
+        public static BirdDto GetBirdById(string pId)
+        {
+            var loQuery = Queries.GetBirdByUserId;
+            loQuery = loQuery.Replace("@P01", pId);
+
+            using var connection = Connection.ConnectionBirdy();
+            if (!Connection.OpenConnection(connection)) return null;
+
+            var result = connection.Query<BirdDto>(loQuery).ToList();
+            return !result.Any() ? null : result.First();
+        }
+
     }
 }

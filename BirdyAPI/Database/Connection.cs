@@ -17,7 +17,7 @@ namespace BirdyAPI.Database
         public static string ConnectionStringForMesnet = "Server=192.168.200.102;Port=5432;Database=mesnet;User Id=mesnet;Password='2020Bikurti';";
         public static string ConnectionStringForBirdy = "Server=192.168.200.102;Port=5432;Database=birdy;User Id=birdy_test;Password='2021!Win-vestaTE';";
 
-        public static Func<DbConnection> ConnectionWinvestate;
+        public static Func<DbConnection> ConnectionBirdy;
         public static Func<DbConnection> ConnectionLog;
         public static Func<DbConnection> ConnectionMesnet;
 
@@ -25,7 +25,7 @@ namespace BirdyAPI.Database
         {
             var loDbObj = new MesnetDbConnection
             {
-                MyConnection = ConnectionWinvestate()
+                MyConnection = ConnectionBirdy()
             };
 
             loDbObj.MyConnection.Open();
@@ -54,7 +54,7 @@ namespace BirdyAPI.Database
         public static void PrepareDatabase()
         {
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            ConnectionWinvestate = () => new NpgsqlConnection(ConnectionStringForBirdy);
+            ConnectionBirdy = () => new NpgsqlConnection(ConnectionStringForBirdy);
             ConnectionLog = () => new NpgsqlConnection(ConnectionStringForLog);
             ConnectionMesnet = () => new NpgsqlConnection(ConnectionStringForMesnet);
         }
